@@ -30,4 +30,6 @@ It integrates many advanced models in many areas,contains object detection,objec
  3.1 HigherHRNet  
  https://github.com/open-mmlab/mmpose
  
+![avatar](https://github.com/sotaDetector/TEDetection/blob/main/resources/docImages/front_live.png)
+ 
 
