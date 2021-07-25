@@ -1,0 +1,563 @@
+/*引入nomalize.css*/
+/* @import "./normalize.css"; */
+
+/*:root -> 获取根元素html*/
+/* :root {
+  --color-text: #666;
+  --color-high-text: #ff5777;
+  --color-tint: #ff8198;
+  --color-background: #fff;
+  --font-size: 14px;
+  --line-height: 1.5;
+} */
+
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Helvetica Neue",Helvetica,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","微软雅黑",Arial,sans-serif;
+  /* user-select: none; 禁止用户鼠标在页面上选中文字/图片等 */
+  -webkit-tap-highlight-color: transparent; /* webkit是苹果浏览器引擎，tap点击，highlight背景高亮，color颜色，颜色用数值调节 */
+  background: var(--color-background);
+  color: var(--color-text);
+  /* rem vw/vh */
+  width: 100vw;
+}
+
+a {
+  color: var(--color-text);
+  text-decoration: none;
+}
+
+em {
+  font-style: normal;
+}
+.clear-fix::after {
+  clear: both;
+  content: '';
+  display: block;
+  width: 0;
+  height: 0;
+  visibility: hidden;
+}
+.clear-fix {
+  zoom: 1;
+}
+/* 公共样式 */
+/* 自定义按钮样式 */
+/* .icon-edit2{
+  display: inline-block;
+  width:14px;
+  height: 14px;
+  background: url('../images/button/edit_nor.png') no-repeat;
+  background-size: 100% 100%;
+  vertical-align: middle;
+  cursor: pointer;
+}
+.icon-delete2{
+  display: inline-block;
+  width:14px;
+  height: 14px;
+  background: url('../images/button/delete_nor.png') no-repeat;
+  background-size: 100% 100%;
+  vertical-align: middle;
+  cursor: pointer;
+}
+.icon-detail2{
+  display: inline-block;
+  width:14px;
+  height: 14px;
+  background: url('../images/button/detail_nor.png') no-repeat;
+  background-size: 100% 100%;
+  vertical-align: middle;
+  cursor: pointer;
+}
+.arrow-round-up{
+  display: inline-block;
+  width:12px;
+  height: 14px;
+  background: url('../images/button/up_nor.png') no-repeat;
+  background-size: 100% 100%;
+  vertical-align: middle;
+  cursor: pointer;
+}
+.arrow-round-down{
+  display: inline-block;
+  width:12px;
+  height: 14px;
+  background: url('../images/button/down_nor.png') no-repeat;
+  background-size: 100% 100%;
+  vertical-align: middle;
+  cursor: pointer;
+} */
+.container_info{
+  padding: 22px;
+  background: #ffffff;
+  border-radius: 0 0 8px 8px;
+}
+.container_title{
+  padding: 16px 0;
+  display: flex;
+  justify-content: space-between;
+}
+.container_title .ivu-breadcrumb{
+  font-size: 18px;
+}
+.container_table{
+  padding: 20px 0 10px 0;
+}
+.container_table .ivu-table-wrapper{
+  border: 1px solid #e6e6e6;
+  border-bottom: none;
+}
+.container_table .ivu-table-header thead tr th{
+  padding: 9px 0;
+}
+.container_table .ivu-table-header{
+  font-family: STHeitiSC-Medium;
+	font-size: 14px;
+	color: #222222;
+}
+.container_table .ivu-table-row{
+  font-family: STHeitiSC-Medium;
+	font-size: 12px;
+	color: #555555;
+}
+.container_info .ivu-table-overflowX,
+.container_info .ivu-table-tip {
+  overflow: initial;
+}
+.query_btn{
+  margin-left: 22px;
+}
+.query_btn button{
+  margin-right: 15px;
+}
+/* 弹框样式 */
+.sys_modal .ivu-modal-header{
+  padding: 11px 16px;
+  background-color: #8c0776;
+  border-radius: 6px 6px 0 0;
+}
+.sys_modal .ivu-modal-header .ivu-modal-header-inner{
+  font-family: STHeitiSC-Medium;
+	font-size: 16px;
+	font-weight: normal;
+	font-stretch: normal;
+	letter-spacing: 0px;
+	color: #ffffff;
+}
+.sys_modal .ivu-modal-close{
+  top: 5px;
+}
+.sys_modal .ivu-modal-close .ivu-icon-ios-close{
+  color: #ffffff;
+}
+.sys_modal .ivu-modal-close .ivu-icon-ios-close:hover{
+  color: #ffffff;
+}
+.sys_modal .ivu-modal-body{
+  padding: 16px 16px 10px 16px;
+}
+.sys_modal .modal_body{
+  padding: 14px 14px 0 14px;
+}
+.sys_modal .ivu-form-item,.enterpriseBox .ivu-form-item{
+  margin-bottom: 20px;
+}
+.sys_modal .ivu-modal-footer{
+  border: none;
+  padding: 0 18px 30px 18px;
+  text-align: center;
+}
+.sys_modal .ivu-form .ivu-form-item-label,
+.enterpriseBox .ivu-form .ivu-form-item-label{
+  font-family: STHeitiSC-Medium;
+	font-size: 14px;
+	color: #222222;
+}
+.sys_modal .ivu-btn{
+  width: 90px;
+  height: 34px;
+  border-radius: 5px;
+  font-family: STHeitiSC-Medium;
+	font-size: 14px;
+}
+.vertical_modal{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.vertical_modal .ivu-modal{
+  top: 0;
+}
+.confirm_btn.ivu-btn.ivu-btn-primary {
+  border: solid 2px #8c0776;
+  color: #8c0776;
+}
+.confirm_btn.ivu-btn-ghost.ivu-btn-primary:hover{
+  color: #8c0776;
+}
+.clear_btn.ivu-btn{
+  border: solid 2px #dadada;
+	color: #555555;
+}
+.sys_modal .ivu-modal-footer button+button,
+.enterpriseBox .saveBtn button+button{
+  margin-left: 30px;
+}
+.sys_modal .modal_body.modal_body_delete{
+  padding: 14px 14px 10px 14px;
+}
+.sys_modal .modal_body.modal_body_delete p{
+  font-family: STHeitiSC-Medium;
+	font-size: 18px;
+  color: #222222;
+  text-align: center;
+}
+.sys_modal .modal_body.modal_body_delete p img{
+  width: 20px;
+  height: 20px;
+  vertical-align: middle;
+  margin-top: -2px;
+  margin-right: 6px;
+}
+/* 分页 */
+.pageInfo{
+  padding: 15px 0 5px 0;
+  display: flex; /*flex布局*/
+  flex-direction: column; /*垂直排列*/
+  align-items: flex-end; /*右对齐*/
+}
+
+/* 菜单权限控制 */
+.menuItem{
+  padding: 10px;
+}
+.menu_title{
+  height: 42px;
+	line-height: 42px;
+	padding-left: 30px;
+	box-sizing: border-box;
+	font-size: 12px;
+	cursor: pointer;
+}
+.menu_title img,.menu_list img{
+  width: 13px;
+  height: 13px;
+  margin-right: 5px;
+  vertical-align: middle;
+}
+.menu_list{
+  border: 1px solid #ddd;
+  border-bottom: none;
+  margin-top: 10px;
+}
+.menu_list .menu_first{
+  background: #f8f8f8;
+  padding-left: 15px;
+  color: #444;
+  letter-spacing: 1px;
+}
+.menu_list p{
+  border-bottom: 1px solid #ddd;
+    min-height: 35px;
+    line-height: 36px;
+    font-size: 12px;
+    cursor: pointer;
+}
+.menu_list .menu_second{
+  color: #666;
+  letter-spacing: 1px;
+  padding-left: 15px;
+}
+.menu_list .menu_second span{
+  padding-left: 10px;
+}
+.save_btn{
+  padding: 20px 30px;
+}
+#role_content .ivu-checkbox-wrapper{
+  width: 100%;
+}
+#role_content .menu_second label{
+  width: auto;
+}
+/* 企业端公共样式 */
+/* 基础页 */
+/* 修改源码的input框高度，select框高度 */
+.wrapper .ivu-input,
+.wrapper .ivu-select-single .ivu-select-selection,
+.modal_body .ivu-input,
+.modal_body .ivu-select-single .ivu-select-selection{
+  height:34px;
+  line-height:34px;
+  border:1px solid #dcdee2;
+  font-family: STHeitiSC-Medium;
+	font-size: 14px;
+	font-weight: normal;
+	font-stretch: normal;
+	letter-spacing: 0px;
+	color: #222222;
+}
+.wrapper .ivu-select-single .ivu-select-selection .ivu-select-placeholder,
+.wrapper .ivu-select-single .ivu-select-selection .ivu-select-selected-value,
+.modal_body .ivu-select-single .ivu-select-selection .ivu-select-placeholder,
+.modal_body .ivu-select-single .ivu-select-selection .ivu-select-selected-value{
+  height:32px;
+  line-height:32px;
+}
+.wrapper .ivu-select-placeholder,
+.wrapper .ivu-select-selected-value{
+  height:32px;
+  line-height:32px;
+}
+.wrapper textarea.ivu-input,.modal_body textarea.ivu-input{
+  height:auto
+}
+/* 单选复选框修改源码 */
+.wrapper .ivu-checkbox-checked .ivu-checkbox-inner,
+.modal_body .ivu-checkbox-checked .ivu-checkbox-inner,
+.formBox .ivu-checkbox-checked .ivu-checkbox-inner{
+  border-color: #8c0776;
+  background-color: #8c0776;
+}
+.wrapper .checkAll,
+.modal_body .checkAll{
+  font-family: STHeitiSC-Medium;
+	font-weight: normal;
+	font-stretch: normal;
+	color: #555555;
+}
+.modal_body .checkAll .ivu-checkbox-wrapper{
+  height: 34px;
+  line-height: 34px;
+  color: #222222;
+}
+.enterpriseBox .ivu-checkbox-wrapper,
+.enterpriseBox .ivu-radio-wrapper{
+  margin-right: 20px;
+  font-family: STHeitiSC-Medium;
+	font-size: 14px;
+	color: #555555;
+}
+.wrapper .ivu-radio-inner:after{
+  background-color: #8c0776;
+}
+.modal_body .ivu-radio-inner:after{
+  background-color: #8c0776;
+}
+.wrapper .ivu-btn,
+.modal_body .ivu-btn{
+  height: 34px;
+  padding: 0 16px;
+  font-size: 14px;
+}
+.sys_radioGroup .ivu-radio-wrapper,
+.sys_checkboxGroup .ivu-checkbox-wrapper{
+  margin-right: 16px;
+  font-family: STHeitiSC-Medium;
+	font-size: 14px;
+  color: #222222;
+  vertical-align: middle;
+}
+/* 修改按钮样式 */
+.ops_btn .ivu-btn{
+  padding: 0 28px;
+}
+.ops_btn .delete_btn{
+  padding: 0 15px;
+}
+.query_btn .ivu-btn{
+  padding: 0 24px;
+}
+.add_btn.ivu-btn-ghost.ivu-btn-success{
+  border: solid 2px #33c465;
+  color: #33c465;
+}
+.delete_btn.ivu-btn-ghost.ivu-btn-error{
+  border: solid 2px #f06464;
+  color: #f06464;
+}
+.export_btn.ivu-btn-ghost.ivu-btn-primary{
+  border: solid 2px #349ced;
+  color: #349ced;
+}
+.get_btn.ivu-btn-warning{
+  background-color: #e88822;
+  border-color: #e88822;
+}
+.reset_btn.ivu-btn{
+  background-color: #0fcc83;
+  border-color: #0fcc83;
+  color: #ffffff;
+}
+.sys_icon{
+  position: relative;
+  top: 2px;
+}
+.modal_body .sys_icon{
+  margin-left: 6px;
+}
+.sys_icon img{
+  width: 14px;
+  height: 14px;
+  cursor: pointer;
+}
+.enterpriseBox{
+  width: auto;
+  margin: 0 auto;
+  padding: 30px 100px;
+}
+.enterprise_main{
+  display: flex;
+  justify-content: space-between;
+}
+.enterpriseMain_left{
+  width: 45%;
+  margin-right: 10%;
+}
+.enterpriseMain_right{
+  width: 45%;
+}
+.enterpriseBox .saveBtn{
+  margin: 0 auto;
+  text-align: center;
+}
+/* 错误表单信息提示 */
+.enterpriseBox .ivu-form-item-error-tip,
+.formBox .ivu-form-item-error-tip,
+.modal_body .ivu-form-item-error-tip{
+  font-size: 12px;
+}
+/* 登录页的输入框 */
+.formBox .formItem .ivu-input{
+  height:46px;
+  line-height:46px;
+  border:none;
+  border-radius: 0;
+  border-bottom: 2px solid #e5e5e5;
+}
+.formBox .formItem input::-webkit-input-placeholder {
+  /* placeholder颜色  */
+  font-family: STHeitiSC-Medium;
+  font-size: 17px;
+  font-weight: normal;
+  font-stretch: normal;
+  letter-spacing: 0px;
+  color: #555555;
+}
+.formBox .formItem .ivu-checkbox-wrapper{
+  font-family: STHeitiSC-Medium;
+  font-size: 12px;
+  font-weight: normal;
+  font-stretch: normal;
+  letter-spacing: 0px;
+  color: #888888;
+}
+.formBox .formItem .ivu-checkbox{
+  margin-right: 6px;
+}
+.formBox .formItem .ivu-checkbox-inner{
+  top: 1px;
+}
+.formBox .formItem .ivu-btn span{
+  font-family: STHeitiSC-Medium;
+  font-size: 18px;
+  font-weight: normal;
+  font-stretch: normal;
+  letter-spacing: 1px;
+  color: #ffffff;
+}
+/* 左上角logo */
+.left_text{
+  height: 42px;
+  line-height: 42px;
+  position: absolute;
+  left: 28px;
+  top: 16px;
+}
+.left_text img{
+  height: 100%;
+}
+.avatar img{
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+}
+.goback{
+  padding: 22px 0;
+}
+.goback .ivu-btn{
+  background-color: #8c0776;
+}
+/* 面包屑 */
+.wrapper .breadcrumb_box,
+.modal_body .breadcrumb_box,
+.wrapper .breadcrumb_box .ivu-breadcrumb-item-link{
+	font-family: STHeitiSC-Medium;
+	font-weight: normal;
+	font-stretch: normal;
+  color: #555555;
+}
+.wrapper .ivu-breadcrumb-item-separator{
+  color: #555555;
+  position: relative;
+  top: 2px;
+}
+.breadcrumb_box{
+  padding-bottom: 14px;
+}
+/* 水平菜单 */
+.main_box .ivu-menu-horizontal{
+  height: 54px;
+  line-height: 52px;
+  border-radius: 8px 8px 0 0;
+}
+.main_box .ivu-menu-light.ivu-menu-horizontal .ivu-menu-item, 
+.main_box .ivu-menu-light.ivu-menu-horizontal .ivu-menu-submenu{
+  font-family: STHeitiSC-Medium;
+	font-size: 16px;
+	font-weight: normal;
+	font-stretch: normal;
+	letter-spacing: 0px;
+	color: #222222;
+}
+.main_box .ivu-menu-light.ivu-menu-horizontal .ivu-menu-item-active, 
+.main_box .ivu-menu-light.ivu-menu-horizontal .ivu-menu-item:hover, 
+.main_box .ivu-menu-light.ivu-menu-horizontal .ivu-menu-submenu-active,
+.main_box .ivu-menu-light.ivu-menu-horizontal .ivu-menu-submenu:hover{
+  color: #8c0776;
+  border-bottom: 3px solid #8c0776;
+  font-size: 16px;
+  font-weight: normal;
+	font-stretch: normal;
+  font-family: STHeitiSC-Medium;
+}
+.main_box .ivu-menu-horizontal.ivu-menu-light:after{
+  background:#eeeeee;
+}
+.nodata{
+  text-align: center;
+  padding: 80px 0;
+}
+.nodata .nodata_txt{
+  margin-top: 12px;
+  font-family: STHeitiSC-Medium;
+	font-size: 12px;
+	color: #a9a9a9;
+}
+.nodata div img{
+  width: 74px;
+  height: 74px;
+  vertical-align: middle;
+}
+.ivu-tabs-nav .ivu-tabs-tab:hover {
+  color: #8c0776!important;
+}
+
