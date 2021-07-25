@@ -1,0 +1,6 @@
+[submodule "excellentDependency/yolov5"]
+	path = excellentDependency/yolov5
+	url = https://github.com/ultralytics/yolov5.git
+[submodule "excellentDependency/mmtracking"]
+	path = excellentDependency/mmtracking
+	url = https://github.com/open-mmlab/mmtracking.git
