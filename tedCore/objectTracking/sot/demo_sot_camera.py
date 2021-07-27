@@ -45,7 +45,7 @@ def main():
         if cv2.waitKey(1) & 0xFF == ord('q'):
             break
 
-        frame_id += 1
+        frame_id = 1
 
     cap.release()
     cv2.destroyAllWindows()

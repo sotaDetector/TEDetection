@@ -20,7 +20,7 @@ class detectionModuleBase(detectionResultPool):
     def resourceRelease(self):
         pass
 
-    def setDatasource(self,sourceType:int,sourceData):
+    def setupDatasource(self,sourceType:int,sourceData):
         self.sourceType=sourceType
         self.sourceData=sourceData
 
