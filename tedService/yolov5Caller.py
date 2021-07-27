@@ -3,7 +3,7 @@ import cv2
 
 yolov5Mou=yolov5Module()
 
-yolov5Mou.setDatasource(1,0)
+yolov5Mou.setupDatasource(1,0)
 
 yolov5Mou.startDetect()
 

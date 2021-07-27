@@ -18,12 +18,18 @@ def calServoAngle():
         time.sleep(0.05)
         if object_th > 0.5:
             offset_x = window_center_x - object_center_x
-            offset_y = window_center_y - object_center_x
-            if offset_x>60:
+            offset_y = window_center_y - object_center_y
+            if offset_x>40:
                 base_change_tag=1
 
-            if offset_x<-60:
+            if offset_x<-40:
                 base_change_tag=-1
+
+            if offset_y>40:
+                up_change_tag=-1
+
+            if offset_y<-40:
+                up_change_tag=1
 
             if base_change_tag==1 and up_change_tag==1:
                 commandFlag=1
