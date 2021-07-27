@@ -33,3 +33,5 @@ It integrates many advanced models in many areas,contains object detection,objec
 ![avatar](https://github.com/sotaDetector/TEDetection/blob/main/resources/docImages/front_live.png)
  
 
+some bug record
+https://blog.csdn.net/qq_34681580/article/details/105163691

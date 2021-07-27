@@ -15,14 +15,6 @@ def main():
     cap = cv2.VideoCapture(0)
 
 
-    save_out_video = True
-
-    fps = cap.get(cv2.CAP_PROP_FPS)
-    size = (int(cap.get(cv2.CAP_PROP_FRAME_WIDTH)),
-            int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT)))
-    fourcc = cv2.VideoWriter_fourcc(*'mp4v')
-    videoWriter = cv2.VideoWriter("../out/out.mp4", fourcc, fps, size)
-
     frame_id = 0
     while (cap.isOpened()):
         flag, frame = cap.read()
@@ -56,8 +48,6 @@ def main():
         frame_id += 1
 
     cap.release()
-    if save_out_video:
-        videoWriter.release()
     cv2.destroyAllWindows()
 
 
