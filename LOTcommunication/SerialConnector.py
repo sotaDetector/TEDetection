@@ -3,16 +3,16 @@ import serial
 import threading
 import time
 
-class arduinoCommu:
+class serialCommu:
 
     def __init__(self):
         serialPort = "COM3"  # 串口
-        baudRate = 9600  # 波特率
-        self.ser = serial.Serial(serialPort, baudRate)
+        baudRate = 9600 # 波特率
+        self.ser = serial.Serial(serialPort, baudRate,timeout=1)
         print("参数设置：串口=%s ，波特率=%d" % (serialPort, baudRate))
 
-    def sendData(self, bytedata):
-        self.ser.write(bytedata)
+    def sendData(self, data):
+        self.ser.write(bytes(str(data),encoding="ASCII"))
 
     def readData(self):
         while True:
@@ -20,9 +20,8 @@ class arduinoCommu:
 
 
 if __name__=="__main__":
-    comm=arduinoCommu()
-    for i in range(179):
-        value = str(i) + "#90"
-        comm.sendData(bytes(value, encoding="utf8"))
+    comm=serialCommu()
+    for i in range(30):
+        comm.sendData(2)
         time.sleep(0.1)
-
+#

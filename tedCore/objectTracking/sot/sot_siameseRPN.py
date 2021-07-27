@@ -4,7 +4,7 @@ from tedCore.common.sotModule import sotModuleBase
 import cv2
 
 
-class SiameseRPN(sotModuleBase):
+class SiameseRPNModule(sotModuleBase):
 
     def __init__(self, configPath: str, weightPath: str, device="cuda:0"):
         super().__init__()
@@ -40,19 +40,3 @@ class SiameseRPN(sotModuleBase):
 
     def resourceRelease(self):
         pass
-
-
-if __name__ == "__main__":
-    configPath = "../../../excellentDependency/mmtracking/configs/sot/siamese_rpn/siamese_rpn_r50_1x_lasot.py"
-    weightPath = "../../../resources/modelWeights/siamese_rpn_r50_1x_lasot_20201218_051019-3c522eff.pth"
-    siameseSot = SiameseRPN(configPath, weightPath)
-    siameseSot.setupDatasource(1, 0)
-    siameseSot.startTracking()
-    print("-------------------------")
-
-    while True:
-        detResult=siameseSot.getDctFrameData()
-        if detResult is not None:
-            cv2.imshow("tracking",detResult.dctImg)
-            if cv2.waitKey(1) & 0xFF == ord('s'):
-                siameseSot.reselectTracking()
