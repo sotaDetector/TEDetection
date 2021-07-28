@@ -1,4 +1,4 @@
-from tedCore.objectDetection.yolov5Module import yolov5Module
+from tedVision.objectDetection.yolov5Module import yolov5Module
 import cv2
 
 yolov5Mou=yolov5Module()

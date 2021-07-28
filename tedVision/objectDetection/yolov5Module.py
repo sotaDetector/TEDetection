@@ -1,6 +1,6 @@
 import torch
-from tedCore.common.detectionModule import detectionModuleBase
-from tedCore.common.detectionResult import detectionFrame
+from tedVision.common.detectionModule import detectionModuleBase
+from tedVision.common.detectionResult import detectionFrame
 
 
 

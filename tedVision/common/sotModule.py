@@ -1,4 +1,4 @@
-from tedCore.common.detectionResult import detectionResultPool, detectionFrame
+from tedVision.common.detectionResult import detectionResultPool, detectionFrame
 import abc
 import threading
 import cv2

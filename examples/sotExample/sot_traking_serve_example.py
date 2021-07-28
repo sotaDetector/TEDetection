@@ -1,5 +1,5 @@
-from LOTcommunication.SerialConnector import serialCommu
-from tedCore.objectTracking.sot.sot_siameseRPN import SiameseRPNModule
+from tedLOT.SerialConnector import serialCommu
+from tedVision.objectTracking.sot.sot_siameseRPN import SiameseRPNModule
 import threading
 import cv2
 import time
@@ -62,7 +62,7 @@ counter=0
 if __name__ == "__main__":
     serialCom.sendData(0)
 
-    configPath = "../../excellentDependency/mmtracking/configs/sot/siamese_rpn/siamese_rpn_r50_1x_lasot.py"
+    configPath = "../../excellentDependency/mmtracking/configs/sotExample/siamese_rpn/siamese_rpn_r50_1x_lasot.py"
     weightPath = "../../resources/modelWeights/siamese_rpn_r50_1x_lasot_20201218_051019-3c522eff.pth"
     siameseSot = SiameseRPNModule(configPath, weightPath)
     siameseSot.setupDatasource(1, 0)

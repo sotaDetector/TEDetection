@@ -3,7 +3,7 @@ import threading
 import numpy as np
 import cv2
 
-from tedCore.common.detectionResult import detectionResultPool, detectionFrame
+from tedVision.common.detectionResult import detectionResultPool, detectionFrame
 
 
 class detectionModuleBase(detectionResultPool):

@@ -1,4 +1,4 @@
-from tedCore.objectDetection.yolov5Module import yolov5Module
+from tedVision.objectDetection.yolov5Module import yolov5Module
 import cv2
 
 class mediaPlayerService:
@@ -7,7 +7,7 @@ class mediaPlayerService:
     def __init__(self):
         self.yolov5Mou = yolov5Module()
 
-        self.yolov5Mou.setDatasource(1, 0)
+        self.yolov5Mou.setupDatasource(1, 0)
 
         self.yolov5Mou.startDetect()
 

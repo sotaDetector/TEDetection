@@ -1,6 +1,6 @@
 from mmtrack.apis import inference_sot, init_model
-from tedCore.common.detectionResult import detectionFrame
-from tedCore.common.sotModule import sotModuleBase
+from tedVision.common.detectionResult import detectionFrame
+from tedVision.common.sotModule import sotModuleBase
 import cv2
 
 
