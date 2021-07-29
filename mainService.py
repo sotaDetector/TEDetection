@@ -2,7 +2,7 @@ from flask import Flask
 import threading
 
 from tedService.mediaPlayer.mediaPlayerDispacher import media_Player_blp
-from tedSignallingSys.socketIOService import  runScoketIo
+from tedSignallingSys.socketioService import  runScoketIo
 
 app = Flask(__name__, static_folder='resources/ted', static_url_path='/')
 
