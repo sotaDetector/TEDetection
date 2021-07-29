@@ -2,10 +2,11 @@
 	<head>
 		<title>RTC Client Test</title>
         <script src="socket.io.js"></script>
+		<script src="jquery-3.6.0.min.js"></script>
         <script type="text/javascript" src="socketioClientTest.js"></script>
 	</head>
 	<body>
-
-		<input type="button" value="send" onclick="sendMsg()"/>
+		<input type="text" id="roomId">
+		<input type="button" value="send" onclick="joinRoom()"/>
 	</body>
 </html>
