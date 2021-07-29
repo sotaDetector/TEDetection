@@ -1,20 +1,9 @@
 from flask_socketio import emit
 
-from tedSignallingSys.commonUtils.logUtils import logUtils
+from tedSignallingSys.commonUtils.logManager import logUtils
 
 
 class socketService:
-    # define the signallings
-    # joined self
-    SING_JOINED = 'joined'
-    # other joined
-    SING_OTHER_JOINED = 'otherJoined'
-    # self leaved
-    SING_LEAVED = 'leaved'
-    # other leaved the room
-    SING_OTHER_LEAVE = 'otherLeaved'
-    # common message
-    SING_MESSAGE = "message"
 
     # send msg to all in the room bu self
     @staticmethod

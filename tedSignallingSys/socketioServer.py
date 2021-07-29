@@ -11,18 +11,18 @@ sigService = sigServiceCore()
 
 
 @socketio.on('join')
-def join(data):
-    sigService.join(data)
+def OnJoin(data):
+    sigService.OnJoin(data)
 
 
 @socketio.on("message")
-def onMessage(data):
-    print("receive message", data)
+def OnMessage(data):
+    sigService.OnMessage(data)
 
 
 @socketio.on('leave')
-def leave(roomId):
-    pass
+def OnLeave(data):
+    sigService.OnLeave(data)
 
 
 def runScoketIo():

@@ -1,12 +1,9 @@
 from flask_socketio import join_room, leave_room
 
-from tedSignallingSys.sigSys.socketService import socketService
+from tedSignallingSys.commonUtils.dataFlags import commonDataTag
+from tedSignallingSys.commonUtils.logManager import logUtils
+from tedSignallingSys.sigSys.socketMsgUtilsr import socketService
 
-
-class commonDataTag:
-    TAG_ROOMId = "roomId"
-    TAG_USERID = "userId"
-    TAG_DATA = "data"
 
 
 class sigDataParser:
@@ -28,14 +25,32 @@ class sigDataParser:
 
 class sigServiceCore:
 
-    def join(self, data):
+    def OnJoin(self, data):
+        logUtils.info("OnJoin" + str(data))
         sigData = sigDataParser(data)
         # join room
 
         join_room(sigData.getRoomId())
         # send msg back
-        socketService.send_to_self(socketService.SING_JOINED, "server:join room successfully")
+        socketService.send_to_self(commonDataTag.SING_JOINED, "server:join room successfully")
 
         # send msg to others in the room
-        socketService.send_to_other(socketService.SING_OTHER_JOINED, sigData.getRoomId(),
+        socketService.send_to_other(commonDataTag.SING_OTHER_JOINED, sigData.getRoomId(),
                                     "server: other joined: " + sigData.getUserId())
+
+    def OnMessage(self, data):
+        logUtils.info("message  transmit " + str(data))
+
+        sigData = sigDataParser(data)
+
+        socketService.send_to_other(commonDataTag.SING_MESSAGE, sigData.getRoomId(), sigData.getData())
+
+    def OnLeave(self, data):
+        logUtils.info("OnLeave" + str(data))
+        sigData = sigDataParser(data)
+        # leave room
+        leave_room(sigData.getRoomId())
+        # msg return
+        socketService.send_to_self(commonDataTag.SING_LEAVED, "server:you have leaved successfully")
+        # notify others
+        socketService.send_to_other(commonDataTag.SING_OTHER_LEAVED,sigData.getRoomId(),"other has leaved...")

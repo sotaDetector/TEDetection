@@ -8,6 +8,24 @@ function joinRoom(){
     })
 }
 
+function sendMsg(){
+    socketioClient.emit('message',{
+        "roomId":$("#roomId").val(),
+        "userId":"12345",
+        "data":$("#messageContent").val()
+    })
+}
+
+
+function leaveRoom(){
+    socketioClient.emit('leave',{
+        "roomId":$("#roomId").val(),
+        "userId":"12345",
+        "data":{}
+    })
+}
+
+
 socketioClient.on("joined",function(data){
 
     console.log("joined successfully");
