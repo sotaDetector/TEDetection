@@ -4,7 +4,7 @@ import threading
 from tedService.mediaPlayer.mediaPlayerDispacher import media_Player_blp
 from tedSignallingSys.socketioServer import  runScoketIo
 
-app = Flask(__name__, static_folder='resources/ted', static_url_path='/')
+app = Flask(__name__, static_folder='resources/tedViews', static_url_path='/')
 
 app.register_blueprint(media_Player_blp)
 

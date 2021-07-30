@@ -1,10 +1,10 @@
 import socketio
 
-from tedService.rtcService.rtcServer import rtcServerClient
 from tedSignallingSys.commonUtils.dataFlags import commonDataTag
 from tedSignallingSys.commonUtils.logManager import logUtils
+from tedRTC.RTCCore.rtcClient import rtcClient
 
-rtcSerClient=rtcServerClient()
+rtcClient=rtcClient()
 
 class socketioClient:
 

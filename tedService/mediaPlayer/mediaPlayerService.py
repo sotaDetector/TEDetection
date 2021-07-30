@@ -9,7 +9,7 @@ class mediaPlayerService:
 
         self.yolov5Mou.setupDatasource(1, 0)
 
-        self.yolov5Mou.startDetect()
+        # self.yolov5Mou.startDetect()
 
     def genFramesFromLiveStream(self, sessionId):
 

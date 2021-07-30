@@ -1,3 +1,3 @@
-class rtcServerClient:
+class rtcClient:
     def createPeerConnection(self):
         pass
