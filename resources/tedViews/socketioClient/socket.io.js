@@ -3522,7 +3522,7 @@ var JSONPPolling = /*#__PURE__*/function (_Polling) {
         var form = document.createElement("form");
         var area = document.createElement("textarea");
         var id = this.iframeId = "eio_iframe_" + this.index;
-        form.className = "socketio";
+        form.className = "signallingClient";
         form.style.position = "absolute";
         form.style.top = "-1000px";
         form.style.left = "-1000px";

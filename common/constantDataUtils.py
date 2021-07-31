@@ -6,4 +6,9 @@ class RTCModel(Enum):
     SED_ONLY = 2
     RECV_ONLY = 3
 
+class SignDT(Enum):
+    SIG_DT_MESSAGE="message"
+    SIG_DT_JOIN = "join"
+    SIG_DT_LEAVE = "leave"
+
 

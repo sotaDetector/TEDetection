@@ -34,9 +34,9 @@ var pcConfig={
 //------------------define constant end----------------
 
 function createSocketClient(){
-    console.log("IMSTEP[2]-create socketio client start");
+    console.log("IMSTEP[2]-create signallingClient client start");
     socketioClient=io.connect("http://localhost:3660")
-    console.log("IMSTEP[2]-create socketio client end");
+    console.log("IMSTEP[2]-create signallingClient client end");
 }
 
 function sendData(eventType,data){
