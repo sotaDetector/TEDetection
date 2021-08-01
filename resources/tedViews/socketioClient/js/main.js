@@ -344,11 +344,11 @@ function getOffer(desc){
 
 	//send offer sdp
 	pc.onicegatheringstatechange=(e)=>{
-		console.log("candidate gathering...")
-		console.log(e.currentTarget.iceGatheringState)
-		if(e.currentTarget.iceGatheringState=="complete"){
-			sendMessage(roomid, pc.localDescription);
-		}
+		// console.log("candidate gathering...")
+		// console.log(e.currentTarget.iceGatheringState)
+		// if(e.currentTarget.iceGatheringState=="complete"){
+			sendMessage(roomid, pc.localDescription)
+		// }
 	}
 
 }
@@ -365,13 +365,7 @@ function createPeerConnection(){
 		pc.onicecandidate = (e)=>{
 
 			if(e.candidate) {
-				sendMessage(roomid, {
-					type: 'candidate',
-					// label:event.candidate.sdpMLineIndex,
-					// id:event.candidate.sdpMid,
-					// candidate: event.candidate.candidate
-					data:JSON.stringify(e.candidate)
-				});
+				sendMessage(roomid, {"type":"candidate","data":e.candidate})
 			}else{
 				console.log('this is the end candidate');
 			}

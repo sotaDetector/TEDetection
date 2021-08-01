@@ -1,5 +1,6 @@
 from aiortc import RTCPeerConnection, RTCConfiguration, RTCIceServer, MediaStreamTrack, RTCSessionDescription
-
+from aiortc.rtcicetransport import candidate_from_aioice
+from aiortc.sdp import candidate_from_sdp
 from common.configPraserUtils import configUtils
 from common.constantDataUtils import RTCModel, SignDT
 from common.logManager import logUtils
@@ -103,8 +104,14 @@ class rtcClient:
 
         logUtils.info("bind media track end...")
 
-    def addRemoteCandidate(self, candidate):
-        self.pc.addIceCandidate(candidate)
+    async def setCandidate(self, data):
+        print("接收到candidate")
+        print(data["candidate"])
+        RTCIceCandidate=candidate_from_sdp(data["candidate"])
+        RTCIceCandidate.sdpMid=data['sdpMid']
+        RTCIceCandidate.sdpMLineIndex=data["sdpMLineIndex"]
+        print(RTCIceCandidate)
+        await self.pc.addIceCandidate(RTCIceCandidate)
 
     # package to RtcSessionDescription format
     def getRTCSessionDescription(self, sdp, type):

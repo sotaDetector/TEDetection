@@ -25,11 +25,6 @@ class sigDataDispacher:
     def joinedRoom(self,roomId,data):
         logUtils.info("join the room:"+roomId)
         logUtils.info(data)
-        client=rtcClient(roomId=roomId,visionTransPlugin=VTP_YOLOV5(),RTCModel=RTCModel.SED_RECV)
-        RTCClientMap[roomId]=client
-
-        print("RTCClientMap")
-        logUtils.info(RTCClientMap)
 
     def otherJoined(self,roomId,data):
         logUtils.info("other joined")
@@ -46,22 +41,29 @@ class sigDataDispacher:
 
 
     def onMessage(self,roomId,data):
-        logUtils.info("message")
-        logUtils.info(data)
 
-        if data["type"]=="offer":
-            if RTCClientMap.keys().__contains__(roomId):
+        print("get message:",data)
+        if data is not None:
+            if data["type"]=="offer":
+                if RTCClientMap.keys().__contains__(roomId):
+                    loop=asyncio.new_event_loop()
+                    loop.create_task(RTCClientMap[roomId].processOffer(roomId,data))
+
+                    try:
+                        loop.run_forever()
+                    finally:
+                        logUtils.info("loop finished...")
+                        loop.close()
+            if data["type"]=="candidate":
                 loop=asyncio.new_event_loop()
-                loop.create_task(RTCClientMap[roomId].processOffer(roomId,data))
-
-                try:
-                    loop.run_forever()
-                finally:
-                    logUtils.info("loop finished...")
-                    loop.close()
+                loop.run_until_complete(RTCClientMap[roomId].setCandidate(data["data"]))
+                loop.close()
 
 
 if __name__=="__main__":
+    roomId="123"
+    client = rtcClient(roomId=roomId, visionTransPlugin=VTP_YOLOV5(), RTCModel=RTCModel.SED_RECV)
+    RTCClientMap[roomId] = client
     sigDataDispacher().initEventListener()
     socketioClient.sendSigData("join","123",{})
 
