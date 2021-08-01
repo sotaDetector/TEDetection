@@ -11,9 +11,5 @@ class socketioClient:
         url="http://192.168.1.7:3660")
 
     @classmethod
-    def sendSigData(cls,eventType,roomId,userId,data):
-        cls.sioClient.emit(eventType,{
-            "roomId": roomId,
-            "userId": userId,
-            "data": data
-        })
+    def sendSigData(cls,eventType,roomId,data):
+        cls.sioClient.emit(eventType,(roomId,data))

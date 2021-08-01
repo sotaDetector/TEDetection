@@ -1,7 +1,7 @@
 from aiortc import RTCPeerConnection, RTCConfiguration, RTCIceServer, MediaStreamTrack, RTCSessionDescription
 
 from common.configPraserUtils import configUtils
-from common.constantDataUtils import RTCModel,SignDT
+from common.constantDataUtils import RTCModel, SignDT
 from common.logManager import logUtils
 from tedRTC.RTCVisonTransfomers.base.videoTransPlugin_Base import videoTransformBase
 from tedRTC.RTCVisonTransfomers.base.visionTransFactory import visionTransFromMediaTrack
@@ -15,17 +15,15 @@ class rtcClient:
         self.visionTransPlugin = visionTransPlugin
         self.RTCModel = RTCModel
 
-        #1.create perrconnection
-        self.pc=self.createPeerConnection({
-            "urls":configUtils.getConfigProperties("stun","urls"),
-            "username":configUtils.getConfigProperties("stun","username"),
-            "credential":configUtils.getConfigProperties("credential","urls")
+        # 1.create perrconnection
+        self.pc = self.createPeerConnection({
+            "urls": configUtils.getConfigProperties("stun", "urls"),
+            "username": configUtils.getConfigProperties("stun", "username"),
+            "credential": configUtils.getConfigProperties("stun", "credential")
         })
 
-        #2.bind pc callback event
+        # 2.bind pc callback event
         self.bindPCEvent()
-
-
 
     # create rtc peer connection
     def createPeerConnection(self, stunConfig):
@@ -41,7 +39,6 @@ class rtcClient:
         ))
 
         logUtils.info("create rtcPeerConnection end...")
-
 
     # bind event for pc
     def bindPCEvent(self):
@@ -59,20 +56,19 @@ class rtcClient:
             if self.pc.iceConnectionState == "failed":
                 await self.pc.close()
 
-    def processOffer(self, roomId: str, offerDict):
+    async def processOffer(self, roomId: str, offerDict):
         await self.setRemoteOffer(offerDict)
 
         await self.createAnswer()
 
         # send the answer sdp to socket server
-        socketioClient.sendSigData(eventType=SignDT.SIG_DT_MESSAGE.value(),
+        socketioClient.sendSigData(eventType=SignDT.SIG_DT_MESSAGE.value,
                                    roomId=roomId,
                                    data={
                                        "type": self.pc.localDescription.type,
                                        "sdp": self.pc.localDescription.sdp
                                    }
                                    )
-
 
     # set remote answer
     async def setRemoteOffer(self, offerDict):
@@ -92,15 +88,14 @@ class rtcClient:
 
         logUtils.info("create answer end...")
 
-    def bindMediaTrack(self,inputTrack:MediaStreamTrack):
+    def bindMediaTrack(self, inputTrack: MediaStreamTrack):
         logUtils.info("bind media track start...")
-
-        input_track_kind=inputTrack.kind
+        out_track = None
+        input_track_kind = inputTrack.kind
         logUtils.info("input media track type:" + input_track_kind)
 
         if input_track_kind == "video":
-            out_track = visionTransFromMediaTrack(track=inputTrack, video_transformer=self.visionTransPlugin,
-                                                 roomId=self.roomId)
+            out_track = visionTransFromMediaTrack(track=inputTrack, visionTransPlugin=self.visionTransPlugin)
         elif input_track_kind == "audio":
             out_track = inputTrack
 
@@ -108,13 +103,9 @@ class rtcClient:
 
         logUtils.info("bind media track end...")
 
-
-    def addRemoteCandidate(self,candidate):
+    def addRemoteCandidate(self, candidate):
         self.pc.addIceCandidate(candidate)
 
     # package to RtcSessionDescription format
     def getRTCSessionDescription(self, sdp, type):
         return RTCSessionDescription(sdp=sdp, type=type)
-
-
-print(configUtils.getConfigProperties("stun","urls"))

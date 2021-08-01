@@ -13,7 +13,7 @@ class configUtils:
     def _readConfig(cls):
         # 实例化ConfigParser
         cls.cf = configparser.ConfigParser()
-        cls.cf.read('config.ini')
+        cls.cf.read('E://visionProject/TEDetection/config.ini')
 
 
     # 读取配置文件

@@ -5,8 +5,9 @@ from tedRTC.RTCVisonTransfomers.base.videoTransPlugin_Base import videoTransform
 
 
 class visionTransFromMediaTrack(MediaStreamTrack):
-
+    kind="video"
     def __init__(self, track: MediaStreamTrack, visionTransPlugin: videoTransformBase):
+        super().__init__()
         self.track = track
         self.transformers = visionTransPlugin
 
