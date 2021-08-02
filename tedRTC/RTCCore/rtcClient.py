@@ -2,7 +2,7 @@ from aiortc import RTCPeerConnection, RTCConfiguration, RTCIceServer, MediaStrea
 from aiortc.rtcicetransport import candidate_from_aioice
 from aiortc.sdp import candidate_from_sdp
 from common.configPraserUtils import configUtils
-from common.constantDataUtils import RTCModel, SignDT
+from common.constantDataUtils import ClientType, SignDT
 from common.logManager import logUtils
 from tedRTC.RTCVisonTransfomers.base.videoTransPlugin_Base import videoTransformBase
 from tedRTC.RTCVisonTransfomers.base.visionTransFactory import visionTransFromMediaTrack, visionMonitorTrackBase
@@ -15,10 +15,10 @@ class rtcClient:
         clientType:1 普通客户端 default
         clientType:2 监控端
     """
-    def __init__(self, roomId: str,visionTransPlugin: videoTransformBase=None, RTCModel: RTCModel=RTCModel.SED_RECV):
+    def __init__(self, roomId: str,visionTransPlugin: videoTransformBase=None, cliType: ClientType=ClientType.SED_RECV):
         self.roomId = roomId
         self.visionTransPlugin = visionTransPlugin
-        self.RTCModel = RTCModel
+        self.cliType = cliType
 
         # 1.create perrconnection
         self.pc = self.createPeerConnection({
@@ -56,7 +56,7 @@ class rtcClient:
                 logUtils.info("media track transport ended...")
 
         #监控端添加track,因为客户端只接受媒体，所以无法出发@input_track方法，只能放这里
-        if self.RTCModel.value==RTCModel.RECV_ONLY:
+        if self.cliType==ClientType.RECV_ONLY:
             out_track=visionMonitorTrackBase(roomId=self.roomId)
             self.pc.addTrack(out_track)
 
@@ -104,7 +104,7 @@ class rtcClient:
         input_track_kind = inputTrack.kind
         logUtils.info("input media track type:" + input_track_kind)
 
-        if self.RTCModel==RTCModel.SED_RECV:
+        if self.cliType==ClientType.SED_RECV:
             if input_track_kind == "video":
                 out_track = visionTransFromMediaTrack(roomId=self.roomId,track=inputTrack, visionTransPlugin=self.visionTransPlugin)
             elif input_track_kind == "audio":

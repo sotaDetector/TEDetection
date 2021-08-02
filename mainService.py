@@ -1,15 +1,13 @@
 from flask import Flask
 import threading
 
-from tedService.mediaPlayer.mediaPlayerDispacher import media_Player_blp
-from tedSignallingSys.socketioServer import  runScoketIo
+from tedService.mediaPlayerService.mediaPlayerDispacher import media_Player_blp
+from tedService.tedRTCService.tedRTCDispacher import tedrtc_blp
 
 app = Flask(__name__, static_folder='resources/tedViews', static_url_path='/')
 
 app.register_blueprint(media_Player_blp)
-
-#start signalling system
-threading.Thread(target=runScoketIo).start()
+app.register_blueprint(tedrtc_blp)
 
 app.run(host='0.0.0.0',
         port=8001)

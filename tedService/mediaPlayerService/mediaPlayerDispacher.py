@@ -1,9 +1,7 @@
 from flask import request, Blueprint, Response
+from tedService.mediaPlayerService.mediaPlayerSer import mediaPlayerService
 
-from common.configPraserUtils import configUtils
-from tedService.mediaPlayer.mediaPlayerService import mediaPlayerService
-
-media_Player_blp = Blueprint("mediaPlayerDispacher", __name__, url_prefix="/mediaPlayer")
+media_Player_blp = Blueprint("mediaPlayerDispacher", __name__, url_prefix="/mediaPlayerService")
 mediaPlayerSer = mediaPlayerService()
 
 
