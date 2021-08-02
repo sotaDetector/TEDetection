@@ -1,4 +1,4 @@
-from aiortc import MediaStreamTrack
+from aiortc import MediaStreamTrack, VideoStreamTrack
 import av
 import queue
 
@@ -28,7 +28,7 @@ class visionTransFromMediaTrack(MediaStreamTrack):
         return new_frame
 
 
-class visionMonitorTrackBase(MediaStreamTrack):
+class visionMonitorTrackBase(VideoStreamTrack):
     kind = "video"
 
     def __init__(self,roomId:str):
@@ -36,10 +36,12 @@ class visionMonitorTrackBase(MediaStreamTrack):
         self.roomId=roomId
 
     async def recv(self):
-        # pts, time_base = await self.next_timestamp()
-        # frame.pts = pts
-        # frame.time_base = time_base
-        frame=roomFrameQueue.getImageFromQueue(self.roomId)
+        pts, time_base = await self.next_timestamp()
+
+        print("monitor image...")
+        frame=roomFrameQueue.getImageFromQueue(self.roomId.replace("MONITOR_",""))
+        frame.pts = pts
+        frame.time_base = time_base
         return frame
 
 

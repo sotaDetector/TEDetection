@@ -12,3 +12,10 @@ def createClient():
     jsonData = request.get_json()
     print("接收到参数",jsonData)
     return tedRTCSer.createClient(jsonData["roomId"])
+
+
+@tedrtc_blp.route("/createMonitorClient",methods=['POST'])
+def createMonitorClient():
+    jsonData = request.get_json()
+    print("接收到参数",jsonData)
+    return tedRTCSer.createMonitorClient(jsonData["roomId"])

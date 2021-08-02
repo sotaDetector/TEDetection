@@ -1,6 +1,5 @@
 'use strict'
 
-var localVideo = document.querySelector('video#localvideo');
 var remoteVideo = document.querySelector('video#remotevideo');
 
 var btnConn =  document.querySelector('button#connserver');
@@ -60,8 +59,7 @@ function is_android() {
 	}
 
 	if (isIOS) {
-      　　//这个是ios操作系统
-     　　 return false;
+		return false;
 	}
 }
 
@@ -85,12 +83,12 @@ function sendMessage(roomid, data){
 	if(!socket){
 		console.log('socket is null');
 	}
-	socket.emit('message', roomid, data,2);
+	socket.emit('message', roomid, data);
 }
 
 function conn(){
 
-	socket = io.connect();
+	socket = io.connect("http://localhost:3660");
 
 	socket.on('joined', (roomid, id) => {
 		console.log('receive joined message!', roomid, id);
@@ -109,7 +107,7 @@ function conn(){
 		console.log('receive joined message, state=', state);
 	});
 
-	socket.on('otherjoin', (roomid) => {
+	socket.on('otherJoined', (roomid) => {
 
 		//如果是多人的话，每上来一个人都要创建一个新的 peerConnection
 		//
@@ -145,7 +143,7 @@ function conn(){
 		btnLeave.disabled = true;
 	});
 
-	socket.on('bye', (room, id) => {
+	socket.on('otherLeaved', (room, id) => {
 		console.log('receive bye message', roomid, id);
 		//state = 'created';
 		//当是多人通话时，应该带上当前房间的用户数
@@ -210,7 +208,7 @@ function conn(){
 
 
 	roomid = getQueryVariable('room');
-	socket.emit('join', roomid,2);
+	socket.emit('join', roomid,{});
 
 	return true;
 }
@@ -218,36 +216,12 @@ function conn(){
 function connSignalServer(){
 
 	//开启本地视频
-	start();
+	conn();
 
-	// conn();
 	return true;
 }
 
-function getMediaStream(stream){
 
-	if(localStream){
-		stream.getAudioTracks().forEach((track)=>{
-			localStream.addTrack(track);
-			stream.removeTrack(track);
-		});
-	}else{
-		localStream = stream;
-	}
-
-	localVideo.srcObject = localStream;
-
-	//这个函数的位置特别重要，
-	//一定要放到getMediaStream之后再调用
-	//否则就会出现绑定失败的情况
-	//
-	//setup connection
-	conn();
-
-	//btnStart.disabled = true;
-	//btnCall.disabled = true;
-	//btnHangup.disabled = true;
-}
 
 function getDeskStream(stream){
 	localStream = stream;
@@ -271,47 +245,6 @@ function shareDesk(){
 
 }
 
-function start(){
-
-	if(!navigator.mediaDevices ||
-		!navigator.mediaDevices.getUserMedia){
-		console.error('the getUserMedia is not supported!');
-		return;
-	}else {
-
-		var constraints;
-
-		if( shareDeskBox.checked && shareDesk()){
-
-			constraints = {
-				video: false,
-				audio:  {
-					echoCancellation: true,
-					noiseSuppression: true,
-					autoGainControl: true
-				}
-			}
-
-		}else{
-			constraints = {
-				video: {
-					width:640,
-					height:480
-				},
-				audio:  {
-					echoCancellation: true,
-					noiseSuppression: true,
-					autoGainControl: true
-				}
-			}
-		}
-
-		navigator.mediaDevices.getUserMedia(constraints)
-					.then(getMediaStream)
-					.catch(handleError);
-	}
-
-}
 
 function getRemoteStream(e){
 	console.log("接收到远端的流....");
@@ -337,20 +270,14 @@ function getAnswer(desc){
 }
 
 function getOffer(desc){
+	console.log("the offer",desc)
 	pc.setLocalDescription(desc);
 	offer.value = desc.sdp;
 	offerdesc = desc;
 
 	console.log("waiting for gathering.....")
+	sendMessage(roomid, desc);
 
-	//send offer sdp
-	pc.onicegatheringstatechange=(e)=>{
-		console.log("candidate gathering...")
-		console.log(e.currentTarget.iceGatheringState)
-		if(e.currentTarget.iceGatheringState=="complete"){
-			sendMessage(roomid, pc.localDescription);
-		}
-	}
 
 }
 
@@ -370,13 +297,7 @@ function createPeerConnection(){
 		pc.onicecandidate = (e)=>{
 
 			if(e.candidate) {
-				sendMessage(roomid, {
-					type: 'candidate',
-					// label:event.candidate.sdpMLineIndex,
-					// id:event.candidate.sdpMid,
-					// candidate: event.candidate.candidate
-					data:JSON.stringify(e.candidate)
-				});
+				sendMessage(roomid, {"type":"candidate","data":e.candidate})
 			}else{
 				console.log('this is the end candidate');
 			}
@@ -415,8 +336,8 @@ function bindTracks(){
 
 function call(){
 
-	if(state === 'joined_conn'){
 
+	if(state === 'joined_conn'){
 		var offerOptions = {
 			offerToRecieveAudio: 1,
 			offerToRecieveVideo: 1
@@ -425,6 +346,7 @@ function call(){
 		pc.createOffer(offerOptions)
 			.then(getOffer)
 			.catch(handleOfferError);
+
 	}
 }
 

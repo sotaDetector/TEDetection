@@ -55,10 +55,6 @@ class rtcClient:
             async def on_ended():
                 logUtils.info("media track transport ended...")
 
-        #监控端添加track,因为客户端只接受媒体，所以无法出发@input_track方法，只能放这里
-        if self.cliType==ClientType.RECV_ONLY:
-            out_track=visionMonitorTrackBase(roomId=self.roomId)
-            self.pc.addTrack(out_track)
 
         @self.pc.on("iceconnectionstatechange")
         async def on_iceconnectionstatechange():
@@ -67,10 +63,23 @@ class rtcClient:
                 await self.pc.close()
 
     async def processOffer(self, roomId: str, offerDict):
+
+        # 监控端添加track,因为客户端只接受媒体，所以无法出发@input_track方法，只能放这里
+        print("处里offer...")
+        if self.cliType == ClientType.RECV_ONLY:
+            out_track = visionMonitorTrackBase(roomId=self.roomId)
+            print("创建monitor track....................")
+            # self.pc.addTransceiver("video", direction="sendonly")
+            # self.pc.addTransceiver("audio", direction="sendonly")
+            self.pc.addTrack(out_track)
+
         await self.setRemoteOffer(offerDict)
 
         await self.createAnswer()
 
+
+
+        print("回复sdp",roomId)
         # send the answer sdp to socket server
         socketioClient.sendSigData(eventType=SignDT.SIG_DT_MESSAGE.value,
                                    roomId=roomId,
@@ -117,7 +126,6 @@ class rtcClient:
 
     async def setCandidate(self, data):
         print("接收到candidate")
-        print(data["candidate"])
         RTCIceCandidate=candidate_from_sdp(data["candidate"])
         RTCIceCandidate.sdpMid=data['sdpMid']
         RTCIceCandidate.sdpMLineIndex=data["sdpMLineIndex"]

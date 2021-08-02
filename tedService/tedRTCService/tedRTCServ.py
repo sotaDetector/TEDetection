@@ -13,5 +13,7 @@ class tedRTCSer:
 
         return {"rs":1}
 
-    def createMonitorClient(self):
-        pass
+    def createMonitorClient(self,roomId):
+        tedRTClient(roomId, ClientType.RECV_ONLY,None)
+
+        return {"rs": 1}

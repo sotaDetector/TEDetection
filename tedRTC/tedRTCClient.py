@@ -32,10 +32,6 @@ class sigDataDispacher:
 
     def otherJoined(self, roomId, data):
         logUtils.info("other joined")
-        # 监控端上线
-        if data['ClientType'] == ClientType.RECV_ONLY:
-            client = rtcClient(roomId=roomId, RTCModel=ClientType.RECV_ONLY)
-        logUtils.info(data);
 
     def leavedRoom(self, roomId, data):
         logUtils.info("leaved the room")
@@ -59,10 +55,24 @@ class sigDataDispacher:
                     finally:
                         logUtils.info("loop finished...")
                         loop.close()
+                elif monitorClientMap.keys().__contains__(roomId):
+                    loop = asyncio.new_event_loop()
+                    loop.create_task(monitorClientMap[roomId].processOffer(roomId, data))
+
+                    try:
+                        loop.run_forever()
+                    finally:
+                        logUtils.info("loop finished...")
+                        loop.close()
             if data["type"] == "candidate":
-                loop = asyncio.new_event_loop()
-                loop.run_until_complete(RTCClientMap[roomId].setCandidate(data["data"]))
-                loop.close()
+                if RTCClientMap.keys().__contains__(roomId):
+                    loop = asyncio.new_event_loop()
+                    loop.run_until_complete(RTCClientMap[roomId].setCandidate(data["data"]))
+                    loop.close()
+                elif monitorClientMap.keys().__contains__(roomId):
+                    loop = asyncio.new_event_loop()
+                    loop.run_until_complete(monitorClientMap[roomId].setCandidate(data["data"]))
+                    loop.close()
 
 
 
@@ -77,7 +87,7 @@ class tedRTClient:
             RTCClientMap[roomId] = client
         elif ClientType.RECV_ONLY == clientType:
             roomId = keyGen.getMonitorRoomId(roomId)
-            client = rtcClient(roomId=roomId, cliType=ClientType.SED_RECV)
+            client = rtcClient(roomId=roomId, cliType=ClientType.RECV_ONLY)
             monitorClientMap[roomId] = client
 
         socketioClient.sendSigData("join", roomId, {})
