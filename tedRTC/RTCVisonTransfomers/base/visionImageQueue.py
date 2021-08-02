@@ -6,7 +6,7 @@ class roomFrameQueue:
     roomFrameQueueMap = {}
     lastFrame={}
 
-    @staticmethod
+    @classmethod
     def pushImageToQueue(cls, roomId: str, frame):
         cls.lastFrame[roomId]=frame
         if not cls.roomFrameQueueMap.keys().__contains__(roomId):
@@ -19,7 +19,7 @@ class roomFrameQueue:
 
         cls.roomFrameQueueMap[roomId].put_nowait(frame)
 
-    @staticmethod
+    @classmethod
     def getImageFromQueue(cls, roomId):
 
         if not cls.roomFrameQueueMap.keys().__contains__(roomId):

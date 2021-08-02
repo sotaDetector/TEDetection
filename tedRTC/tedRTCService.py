@@ -28,6 +28,8 @@ class sigDataDispacher:
 
     def otherJoined(self,roomId,data):
         logUtils.info("other joined")
+        if data['RTCModel']==RTCModel.RECV_ONLY:
+            client = rtcClient(roomId=roomId,RTCModel=RTCModel.RECV_ONLY)
         logUtils.info(data);
 
 
