@@ -36,14 +36,31 @@ class visionMonitorTrackBase(VideoStreamTrack):
         self.roomId=roomId
 
     async def recv(self):
-        pts, time_base = await self.next_timestamp()
-
-        print("monitor image...")
         frame=roomFrameQueue.getImageFromQueue(self.roomId.replace("MONITOR_",""))
-        frame.pts = pts
-        frame.time_base = time_base
         return frame
 
+
+#将检测到的结果放到队列里进行缓存
+class visionTransAndCache:
+
+    def __init__(self,roomId:str, track: MediaStreamTrack, visionTransPlugin: videoTransformBase):
+        super().__init__()
+        self.track = track
+        self.transformers = visionTransPlugin
+        self.roomId=roomId
+
+    async def processImgAndCache(self):
+        while True:
+            # get orign data
+            frame = await self.track.recv()
+            # trans
+            # rebuild a av.VideoFrame,processing timing information
+            new_frame = av.VideoFrame.from_ndarray(self.transformers.transform(frame),
+                                                   format="bgr24")
+            new_frame.pts = frame.pts
+            new_frame.time_base = frame.time_base
+
+            roomFrameQueue.pushImageToQueue(roomId=self.roomId,frame=new_frame)
 
 
 

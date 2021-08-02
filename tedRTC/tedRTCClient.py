@@ -85,10 +85,13 @@ class tedRTClient:
         if ClientType.SED_RECV == clientType:
             client = rtcClient(roomId=roomId, visionTransPlugin=visionPlugin, cliType=ClientType.SED_RECV)
             RTCClientMap[roomId] = client
-        elif ClientType.RECV_ONLY == clientType:
+        elif ClientType.SED_ONLY == clientType:
             roomId = keyGen.getMonitorRoomId(roomId)
-            client = rtcClient(roomId=roomId, cliType=ClientType.RECV_ONLY)
+            client = rtcClient(roomId=roomId, cliType=ClientType.SED_ONLY)
             monitorClientMap[roomId] = client
+        elif ClientType.RECV_ONLY == clientType:
+            client = rtcClient(roomId=roomId,visionTransPlugin=visionPlugin,cliType=ClientType.RECV_ONLY)
+            RTCClientMap[roomId] = client
 
         socketioClient.sendSigData("join", roomId, {})
 
