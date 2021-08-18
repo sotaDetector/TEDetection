@@ -8,10 +8,17 @@ from tedVision.common.detectionResult import detectionResultPool, detectionFrame
 
 class detectionModuleBase(detectionResultPool):
 
-    def __init__(self):
+    def __init__(self,modelConfig):
         super().__init__()
         self.isDetect = False
+        self.model=self._loadModel(modelConfig)
 
+    # load model
+    @abc.abstractmethod
+    def _loadModel(self, configData: dict):
+        pass
+
+    #detect thread
     @abc.abstractmethod
     def _detectionEngine(self,frameData:np.ndarray) -> detectionFrame:
         pass

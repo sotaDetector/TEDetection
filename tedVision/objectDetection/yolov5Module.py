@@ -7,9 +7,16 @@ from tedVision.common.detectionResult import detectionFrame
 class yolov5Module(detectionModuleBase):
 
 
-    def __init__(self):
-        super().__init__()
-        self.model = torch.hub.load('ultralytics/yolov5', 'yolov5s')  # or yolov5m, yolov5l, yolov5x, custom
+    def __init__(self,modelConfig):
+        super().__init__(modelConfig) #the method must be called
+        # self.model = torch.hub.load('E://visionProject/TEDetection/resources/modelWeights/yolov5s.pt', 'yolov5s')  # or yolov5m, yolov5l, yolov5x, custom
+
+
+    #the yolov5 init method
+    def _loadModel(modelConfig):
+        pass
+
+
 
     def _detectionEngine(self,frameData):
         results = self.model(frameData)
@@ -17,3 +24,4 @@ class yolov5Module(detectionModuleBase):
 
     def resourceRelease(self):
         pass
+
